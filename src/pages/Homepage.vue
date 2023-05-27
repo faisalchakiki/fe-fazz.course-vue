@@ -1,12 +1,21 @@
 <template>
-  <p class="text-2xl">
-    Homepage
-  </p>
+  <Navbar />
+  <div class="h-[180vh] bg-orange-300"></div>
+  <Footer />
+  <Contact />
 </template>
 <script lang="ts">
-export default {
-  
-}
+  import Contact from '../components/atoms/Contact.vue'
+  import Footer from '../components/organisms/Footer.vue'
+  import Navbar from '../components/organisms/NavUser.vue';
+ 
+  export default {
+    components:{
+      Contact,
+      Footer,
+      Navbar
+    },
+  }
 </script>
 <style lang="">
   
