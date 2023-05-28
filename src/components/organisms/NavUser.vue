@@ -123,9 +123,11 @@
               </section>
               <section v-else class="flex gap-5">
                   <button
+                      @click="moveLogin"
                       type="button"
                       class="rounded-[4px] py-[12px] px-[20px] text-p bg-white text-blue-600 border-[1px] border-blue-500 hover:bg-blue-100 focus:shadow-[0_0_0_4px_rgba(73,115,182,0.1)] font-bold text-center outline-none disabled:bg-neutral-300 disabled:text-neutral-600 disabled:border-[1px] disabled:border-neutral-500">Masuk</button>
                   <button
+                  @click="moveRegister"
                       type="button"
                       class="rounded-[4px] py-[12px] px-[20px] text-p bg-blue-600 text-neutral-100 border-[1px] border-blue-600 hover:bg-blue-700 hover:border-blue-700 focus:shadow-[0_0_0_4px_rgba(73,115,182,0.1)] font-bold text-center outline-none disabled:bg-neutral-300 disabled:text-neutral-600 disabled:border-[1px] disabled:border-neutral-500">Daftar</button>
               </section>
@@ -196,6 +198,12 @@ export default {
       handleLogout(){
         localStorage.removeItem('token')
         this.isLogin = false
+      },
+      moveLogin(){
+        this.$router.push('/login')
+      },
+      moveRegister(){
+        this.$router.push('/register')
       }
     }
 }
