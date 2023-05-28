@@ -71,3 +71,20 @@
         }
     })
 </script>
+        },
+        computed:{
+            onInput:{
+                get(){
+                    return this.inputValue
+                },
+                set(val: string){
+                    this.inputValue = val
+                    this.$emit('on-change', {
+                        name : this.name,
+                        value : this.inputValue
+                    })
+                }
+            }
+        }
+    })
+</script>
