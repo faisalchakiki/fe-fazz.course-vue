@@ -71,9 +71,9 @@
 </template>
 <script lang='ts'>
     import {defineComponent} from 'vue';
-    import Input from '../components/atom/Input.vue';
-    import BtnPrimary from "../components/atom/BtnPrimary.vue"
-    import BtnGoogle from '../components/atom/BtnGoogle.vue';
+    import Input from '../components/atoms/Input.vue';
+    import BtnPrimary from "../components/atoms/BtnPrimary.vue"
+    import BtnGoogle from '../components/atoms/BtnGoogle.vue';
     import LogoFazz from '../components/atoms/LogoFazz.vue';
     import axios from "axios"
 
