@@ -7,11 +7,6 @@
 *{
   font-family: 'Inter', sans-serif;
 }
-
-body{
-  height: 200vh;
-}
-
 .navbar-side{
   top: 0;
   position: sticky;

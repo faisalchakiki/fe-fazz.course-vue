@@ -42,6 +42,7 @@
                 <p  class="w-full text-center my-4">atau masuk menggunakan</p>
                 <BtnGoogle title="google"/>
             </form>
+            <ToastSuccess v-if="toastStatus" title="Succes Login"/>
         </div>
     </div>
 </template>
@@ -49,8 +50,9 @@
     import {defineComponent} from 'vue';
     import Input from '../components/atoms/Input.vue';
     import BtnPrimary from "../components/atoms/BtnPrimary.vue"
-    import BtnGoogle from '../components/atoms/BtnPrimary.vue';
+    import BtnGoogle from '../components/atoms/BtnGoogle.vue';
     import LogoFazz from '../components/atoms/LogoFazz.vue';
+    import ToastSuccess from '../components/atoms/ToastSuccess.vue';
     import axios from 'axios';
 
 
@@ -59,6 +61,7 @@
 
     interface Data {
         form: IForm
+        toastStatus:boolean
     }
 
     interface IForm {
@@ -73,14 +76,16 @@
                 form: {
                     email: "",
                     password: ""
-                }
+                },
+                toastStatus:false
             }
         },
         components: {
             Input,
             BtnPrimary,
             BtnGoogle,
-            LogoFazz
+            LogoFazz,
+            ToastSuccess
         },
         methods: {
             hnaldeInput(data : any) {
@@ -95,6 +100,11 @@
                 axios.post(`https://fazz-track-sample-api.vercel.app/login`, this.form)
                .then((_res)=>{
                 localStorage.setItem('token', _res.data.data.token)
+                this.toastStatus = true
+                setTimeout(() => {
+                   this.$router.push('/') 
+                   this.toastStatus = false
+                }, 2000);
                })
             },
             moveLogin(){
