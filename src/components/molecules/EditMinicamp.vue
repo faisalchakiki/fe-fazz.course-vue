@@ -97,8 +97,8 @@
 
 <script lang="ts">
   import axios from 'axios';
-  import Input from '../atom/Input.vue';
-  import BtnPrimary from '../atom/BtnPrimary.vue';
+  import Input from '../atoms/Input.vue';
+  import BtnPrimary from '../atoms/BtnPrimary.vue';
   
   const token = localStorage.getItem('token')
   const config = {

@@ -84,8 +84,8 @@
   </div>
 </template>
 <script lang="ts">
-  import Input from '../atom/Input.vue';
-  import BtnPrimary from '../atom/BtnPrimary.vue';
+  import Input from '../atoms/Input.vue';
+  import BtnPrimary from '../atoms/BtnPrimary.vue';
   
   interface Data {
     dataMinicamp: IDataMinicamp
