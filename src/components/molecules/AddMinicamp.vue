@@ -188,7 +188,6 @@
           typeof this.dataMinicamp.isWork !== 'boolean'  
           ){
             alert('Please fill all the input')
-            console.log(this.dataMinicamp.created_at)
           }
           this.$emit('on-confirm', this.dataMinicamp)
         }

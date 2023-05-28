@@ -1,4 +1,5 @@
 <template>
+  <ToastSuccess v-if="isAlert" title="Success Add Minicamp" />
   <Navbar />
   <main class="pb-20 z-10 border">
     <header class="container-class py-10 mx-auto">
@@ -31,6 +32,7 @@
 <script lang="ts">
   import axios from 'axios';
 
+  import ToastSuccess from '../components/atoms/ToastSuccess.vue';
   import LogoText from '../components/atoms/LogoText.vue';
   import Contact from '../components/atoms/Contact.vue'
   import Footer from '../components/organisms/Footer.vue'
@@ -52,6 +54,7 @@
     isLogin : string
     token : string | boolean
     isReadyData: boolean
+    isAlert: boolean
   }
 
   interface IOptions {
@@ -94,7 +97,8 @@
         isModal : false,
         isLogin : token || tempToken,
         token : token || false,
-        isReadyData: false
+        isReadyData: false,
+        isAlert: false
       }
     },
     components:{
@@ -104,7 +108,8 @@
       LogoText,
       NavbarSection,
       CardMinicamp,
-      Modal
+      Modal,
+      ToastSuccess
     },
     methods:{
       async fetchData() {
@@ -116,7 +121,12 @@
       async insertData(data : any) {
         const response = await axios.post('https://fazz-track-sample-api.vercel.app/minicamp',data, config)
         if(response.status === 200){
-          this.fetchData()
+          this.isAlert = true
+          setTimeout(() => {
+            this.fetchData()
+          }, 2000);
+        }else{
+          alert('error insert')
         }
       },
       handleModal(){

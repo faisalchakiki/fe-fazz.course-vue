@@ -2,9 +2,9 @@
   <section class="bg-white z-[100] sticky top-0 right-0 left-0 h-20 flex justify-center items-center shadow-1">
     <!-- <div class="fixed z-60 inset-0 bg-[#494c51] opacity-50"></div> -->
     <nav class="container-class bg-white flex items-center">
-          <section class="w-56">
+          <a href="/" class="w-56">
             <Logo />
-          </section>
+          </a>
           <main class="flex flex-1 justify-between items-center">
             <section class="flex justify-between items-center font-bold gap-5">
               <div @click="showNav1" class="relative flex justify-between items-center cursor-pointer">
@@ -41,7 +41,7 @@
                     <section>
                       <p class="text-[#b6bac0] font-medium mb-[16px] uppercase whitespace-nowrap">Online Course</p>
                       <section class="flex flex-col items-start gap-[6px]">
-                        <a rel="noopener noreferrer" class="flex items-center font-bold whitespace-nowrap py-[4px]">Lihat Semua <svg data-v-cf1ec82f="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="icon ml-[8px]" width="16px" height="16px" viewBox="0 0 24 24"><path fill="currentColor" d="M4 11v2h12l-5.5 5.5l1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5L16 11H4Z"></path></svg>
+                        <a href="/online-course" rel="noopener noreferrer" class="flex items-center font-bold whitespace-nowrap py-[4px]">Lihat Semua <svg data-v-cf1ec82f="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="icon ml-[8px]" width="16px" height="16px" viewBox="0 0 24 24"><path fill="currentColor" d="M4 11v2h12l-5.5 5.5l1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5L16 11H4Z"></path></svg>
                         </a>
                       </section>
                     </section>
@@ -111,8 +111,8 @@
                         </div>
                       </div>
                       <section class="ml-3 w-36 overflow-hidden">
-                        <h6>Faisal Chakiki</h6>
-                        <p class="truncate" aria-label="faisalchakiki012018@gmail.com">faisalchakiki012018@gmail.com</p>
+                        <h6>{{nameUser}}</h6>
+                        <p class="truncate" aria-label="faisalchakiki012018@gmail.com">{{dataUser?.email}}</p>
                       </section>  
                     </section>
                     <div class="h-[0.4px] bg-neutral-300 my-[14px]"></div>
@@ -138,75 +138,118 @@
 </template>
 
 <script lang="ts">
+  import axios from 'axios';
   import Logo from '../atoms/LogoFazz.vue';
   import ArrowUp from '../atoms/ArrowUp.vue';
   import ArrowDown from '../atoms/ArrowDown.vue';
 
   const token = localStorage.getItem('token')
+  const config = {
+    headers: { Authorization: token }
+  };
+  interface Data {
+      isOpenNav1 : boolean
+      isOpenNav2 : boolean
+      isOpenNav3 : boolean
+      isAvatarDropdown : boolean
+      isLogin: string | boolean
+      dataUser : IUser
+      nameUser : string
+  }
 
-export default {
-  components:{
-      Logo,
-      ArrowDown,
-      ArrowUp
-  },
-  data(){
-      return {
-        isOpenNav1 : false,
-        isOpenNav2 : false,
-        isOpenNav3 : false,
-        isAvatarDropdown : false,
-        isLogin: token || false
-      }
+  interface IUser {
+        id: number
+        created_at: string
+        email: string
+        password: string
+        iat: number
+  }
+
+  export default {
+    components:{
+        Logo,
+        ArrowDown,
+        ArrowUp
     },
+    
+    data() : Data{
+        return {
+          isOpenNav1 : false,
+          isOpenNav2 : false,
+          isOpenNav3 : false,
+          isAvatarDropdown : false,
+          isLogin: token || false,
+          dataUser : {
+            created_at: "",
+            email: "",
+            iat: 0,
+            id: 0,
+            password: "",
+          },
+          nameUser : ''
+        }
+      },
     computed:{
-      setIslogin(){
-        this.isLogin = !this.isLogin
-      }
-    },
+        setIslogin(){
+          this.isLogin = !this.isLogin
+        }
+      },
     methods:{
-      closeNav(){
-        this.isOpenNav1 = false
-        this.isOpenNav2 = false
-        this.isOpenNav3 = false
-        this.isAvatarDropdown = false
-      },
-      showNav1(){
-        if(this.isOpenNav1 === false){
-          this.closeNav()
+        closeNav(){
+          this.isOpenNav1 = false
+          this.isOpenNav2 = false
+          this.isOpenNav3 = false
+          this.isAvatarDropdown = false
+        },
+        showNav1(){
+          if(this.isOpenNav1 === false){
+            this.closeNav()
+          }
+          this.isOpenNav1 = !this.isOpenNav1
+        },
+        showNav2(){
+          if(this.isOpenNav2 === false){
+            this.closeNav()
+          }
+          this.isOpenNav2 = !this.isOpenNav2
+        },
+        showNav3(){
+          if(this.isOpenNav3 === false){
+            this.closeNav()
+          }
+          this.isOpenNav3 = !this.isOpenNav3
+        },
+        showDropdownProfile(){
+          if(this.isAvatarDropdown === false){
+            this.closeNav()
+          }
+          this.isAvatarDropdown = !this.isAvatarDropdown
+        },
+        handleLogout(){
+          localStorage.removeItem('token')
+          window.location.reload()
+          this.isLogin = false
+        },
+        moveLogin(){
+          this.$router.push('/login')
+        },
+        moveRegister(){
+          this.$router.push('/register')
+        },
+        async getDataUser(){
+          const response = await axios.get('https://fazz-track-sample-api.vercel.app/profile',config)
+          if(response.status === 200){
+            this.dataUser = response.data.data
+            this.nameUser = this.dataUser.email.split('@')[0]
+          }else{
+            console.log('error navbar')
+          }
         }
-        this.isOpenNav1 = !this.isOpenNav1
       },
-      showNav2(){
-        if(this.isOpenNav2 === false){
-          this.closeNav()
-        }
-        this.isOpenNav2 = !this.isOpenNav2
-      },
-      showNav3(){
-        if(this.isOpenNav3 === false){
-          this.closeNav()
-        }
-        this.isOpenNav3 = !this.isOpenNav3
-      },
-      showDropdownProfile(){
-        if(this.isAvatarDropdown === false){
-          this.closeNav()
-        }
-        this.isAvatarDropdown = !this.isAvatarDropdown
-      },
-      handleLogout(){
-        localStorage.removeItem('token')
-        this.isLogin = false
-      },
-      moveLogin(){
-        this.$router.push('/login')
-      },
-      moveRegister(){
-        this.$router.push('/register')
-      }
+    mounted(){
+      this.getDataUser()
     }
-}
+  }
 </script>
 
 <style lang="">

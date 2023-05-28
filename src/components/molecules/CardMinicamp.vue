@@ -63,14 +63,16 @@
     },
     methods: {
       async deleteCourse(id : number){
-        const response = await axios.delete(`https://fazz-track-sample-api.vercel.app/minicamp/${id}`, config)
-        if(response.status === 200){
-          alert('Success delete course')
-          window.location.reload()
+        const confirmResponse = confirm('Minicamp will be removed, are you sure?')
+        if(confirmResponse){
+          const response = await axios.delete(`https://fazz-track-sample-api.vercel.app/minicamp/${id}`, config)
+          if(response.status === 200){
+            alert('Success delete course')
+            window.location.reload()
+          }
         }
       },
       handleModal(id : number){
-        console.log(this.options)
         this.id = id
         this.isModal = !this.isModal
       },
@@ -90,9 +92,6 @@
         }
       },
     },
-    mounted(){
-      console.log(this.options)
-    }
   }
 </script>
 <style lang="">
