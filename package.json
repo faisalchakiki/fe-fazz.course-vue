@@ -9,10 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@types/vue-router": "^2.0.0",
     "axios": "^1.4.0",
     "daisyui": "^2.51.6",
     "dotenv": "^16.0.3",
+    "swiper": "^9.3.2",
     "vue": "^3.2.47",
     "vue-router": "^4.2.1",
     "vue3-google-login": "^2.0.15"

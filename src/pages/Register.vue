@@ -3,7 +3,9 @@
         <div class="container flex justify-center ">
             <form @submit.prevent="handleRegister" action="" class="w-full border-[1px] p-4 sm:p-12 md:p-20 rounded-md my-12 max-w-2xl">
                 <div class="w-full flex flex-col items-center">
-                    <p class="text-2xl font-medium">Fazzrack</p>
+                    <div>
+                        <LogoFazz/>
+                    </div>
                     <p class="text-xl font-semibold mb-2">Daptar dan Mulai Belajar</p>
                     <p class="text-normal mb-3">Sudah punya akun Fazzrack?
                         <span  @click="moveRegiter" class="text-[#ef6807] cursor-pointer">Masuk disini</span>
@@ -62,16 +64,17 @@
                         <p class="text-[#2557a7] font-bold">Syarat dan Ketentuan</p>
                     </div>
                 </div>
-                <BtnPrimary title="Daftar Fazztrack"/>
+                <BtnPrimary title="Daptar Fazztrack"/>
             </form>
         </div>
     </div>
 </template>
 <script lang='ts'>
     import {defineComponent} from 'vue';
-    import Input from '../components/atom/Input.vue';
-    import BtnPrimary from "../components/atom/BtnPrimary.vue"
-    import BtnGoogle from '../components/atom/BtnGoogle.vue';
+    import Input from '../components/atoms/Input.vue';
+    import BtnPrimary from "../components/atoms/BtnPrimary.vue"
+    import BtnGoogle from '../components/atoms/BtnGoogle.vue';
+    import LogoFazz from '../components/atoms/LogoFazz.vue';
     import axios from "axios"
 
     interface Data {
@@ -96,7 +99,8 @@
         components: {
             Input,
             BtnPrimary,
-            BtnGoogle
+            BtnGoogle,
+            LogoFazz
         },
         methods: {
             hnaldeInput(data : any) {

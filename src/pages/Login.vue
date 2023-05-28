@@ -3,10 +3,10 @@
         <div class="container flex justify-center ">
             <form @submit.prevent="handleLogin" action="" class="w-full border-[1px] p-4 sm:p-12 md:p-20 rounded-md my-12 max-w-2xl">
                 <div class="w-full flex flex-col items-center">
-                    <p class="text-2xl mb-5 font-medium">Fazzrack</p>
-                    <p class="text-3xl font-medium mb-2">Selamat Datang</p>
+                    <LogoFazz class="mb-5"/>
+                    <p class="text-2xl font-semibold mb-2">Selamat Datang</p>
                     <p class="text-normal mb-3">Belum punya akun Fazzrack?
-                        <span @click="moveLogin" class="text-[#ef6807] font-bold cursor-pointer">Daftar disini</span>
+                        <span @click="moveLogin" class="text-[#ef6807] font-bold cursor-pointer">Daptar disini</span>
                     </p>
                 </div>
                 <div class="w-full">
@@ -42,14 +42,17 @@
                 <p  class="w-full text-center my-4">atau masuk menggunakan</p>
                 <BtnGoogle title="google"/>
             </form>
+            <ToastSuccess v-if="toastStatus" title="Succes Login"/>
         </div>
     </div>
 </template>
 <script lang='ts'>
     import {defineComponent} from 'vue';
-    import Input from '../components/atom/Input.vue';
-    import BtnPrimary from "../components/atom/BtnPrimary.vue"
-    import BtnGoogle from '../components/atom/BtnGoogle.vue';
+    import Input from '../components/atoms/Input.vue';
+    import BtnPrimary from "../components/atoms/BtnPrimary.vue"
+    import BtnGoogle from '../components/atoms/BtnGoogle.vue';
+    import LogoFazz from '../components/atoms/LogoFazz.vue';
+    import ToastSuccess from '../components/atoms/ToastSuccess.vue';
     import axios from 'axios';
 
 
@@ -58,6 +61,7 @@
 
     interface Data {
         form: IForm
+        toastStatus:boolean
     }
 
     interface IForm {
@@ -72,13 +76,16 @@
                 form: {
                     email: "",
                     password: ""
-                }
+                },
+                toastStatus:false
             }
         },
         components: {
             Input,
             BtnPrimary,
-            BtnGoogle
+            BtnGoogle,
+            LogoFazz,
+            ToastSuccess
         },
         methods: {
             hnaldeInput(data : any) {
@@ -93,6 +100,11 @@
                 axios.post(`https://fazz-track-sample-api.vercel.app/login`, this.form)
                .then((_res)=>{
                 localStorage.setItem('token', _res.data.data.token)
+                this.toastStatus = true
+                setTimeout(() => {
+                   this.$router.push('/') 
+                   this.toastStatus = false
+                }, 2000);
                })
             },
             moveLogin(){
