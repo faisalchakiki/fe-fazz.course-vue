@@ -96,9 +96,9 @@
               <section class="cursor-pointer">
                 <img class="w-6" src="../../assets/cart.svg" alt="cart" />
               </section>
-              <section @click="showDropdownProfile" class="dropdown-profile relative">
+              <section v-if="isLogin" @click="showDropdownProfile" class="dropdown-profile relative">
                   <section>
-                    <div data-v-dd33f8c4="" data-v-282fc1c4="" class="flex items-center justify-center min-w-[44px] w-[44px] h-[44px] bg-slate-300 rounded-full" >
+                    <div data-v-dd33f8c4="" data-v-282fc1c4="" class="flex items-center justify-center min-w-[44px] w-[44px] h-[44px] bg-slate-300 rounded-full cursor-pointer" >
                       <!-- <img alt="image-profile" src="" lazy="loaded"> -->
                     </div>
                   </section>
@@ -116,10 +116,18 @@
                       </section>  
                     </section>
                     <div class="h-[0.4px] bg-neutral-300 my-[14px]"></div>
-                    <p class="font-bold mb-[14px]">Profile</p>
-                    <p class="font-bold">Logout</p>
+                    <p class="font-bold mb-[14px] cursor-pointer">Profile</p>
+                    <p @click="handleLogout" class="font-bold cursor-pointer">Logout</p>
                   </section>
                 </nav>
+              </section>
+              <section v-else class="flex gap-5">
+                  <button
+                      type="button"
+                      class="rounded-[4px] py-[12px] px-[20px] text-p bg-white text-blue-600 border-[1px] border-blue-500 hover:bg-blue-100 focus:shadow-[0_0_0_4px_rgba(73,115,182,0.1)] font-bold text-center outline-none disabled:bg-neutral-300 disabled:text-neutral-600 disabled:border-[1px] disabled:border-neutral-500">Masuk</button>
+                  <button
+                      type="button"
+                      class="rounded-[4px] py-[12px] px-[20px] text-p bg-blue-600 text-neutral-100 border-[1px] border-blue-600 hover:bg-blue-700 hover:border-blue-700 focus:shadow-[0_0_0_4px_rgba(73,115,182,0.1)] font-bold text-center outline-none disabled:bg-neutral-300 disabled:text-neutral-600 disabled:border-[1px] disabled:border-neutral-500">Daftar</button>
               </section>
             </section>
           </main>
@@ -131,6 +139,9 @@
   import Logo from '../atoms/LogoFazz.vue';
   import ArrowUp from '../atoms/ArrowUp.vue';
   import ArrowDown from '../atoms/ArrowDown.vue';
+
+  const token = localStorage.getItem('token')
+
 export default {
   components:{
       Logo,
@@ -143,6 +154,12 @@ export default {
         isOpenNav2 : false,
         isOpenNav3 : false,
         isAvatarDropdown : false,
+        isLogin: token || false
+      }
+    },
+    computed:{
+      setIslogin(){
+        this.isLogin = !this.isLogin
       }
     },
     methods:{
@@ -176,6 +193,10 @@ export default {
         }
         this.isAvatarDropdown = !this.isAvatarDropdown
       },
+      handleLogout(){
+        localStorage.removeItem('token')
+        this.isLogin = false
+      }
     }
 }
 </script>
