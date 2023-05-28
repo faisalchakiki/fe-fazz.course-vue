@@ -10,6 +10,7 @@
   interface IOptions {
       id: number
       value: string
+      active: boolean
   }
   export default {
     props:{
@@ -17,9 +18,12 @@
         type: Array as PropType<IOptions[]>,
         required : true
       }
+    },
+    methods: {
+    
     }
   }
 </script>
-<style lang="">
-  
+<style>
+
 </style>

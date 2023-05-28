@@ -1,5 +1,5 @@
 <template>
-  <section class="bg-white sticky top-0 right-0 left-0 h-20 z-40 flex justify-center items-center shadow-1">
+  <section class="bg-white z-[100] sticky top-0 right-0 left-0 h-20 flex justify-center items-center shadow-1">
     <!-- <div class="fixed z-60 inset-0 bg-[#494c51] opacity-50"></div> -->
     <nav class="container-class bg-white flex items-center">
           <section class="w-56">
@@ -88,13 +88,49 @@
                   </section>
                 </nav>
               </div>        
-              <div class="font-bold">
+              <div class="font-bold cursor-pointer">
                 <p>Hire Our Graduate</p>
               </div>
             </section>
-            <section class="flex gap-5">
-              <button type="button" class="rounded-[4px] py-[12px] px-[20px] text-p bg-white text-blue-600 border-[1px] border-blue-500 hover:bg-blue-100 focus:shadow-[0_0_0_4px_rgba(73,115,182,0.1)] font-bold text-center outline-none disabled:bg-neutral-300 disabled:text-neutral-600 disabled:border-[1px] disabled:border-neutral-500">Masuk</button>
-              <button type="button" class="rounded-[4px] py-[12px] px-[20px] text-p bg-blue-600 text-neutral-100 border-[1px] border-blue-600 hover:bg-blue-700 hover:border-blue-700 focus:shadow-[0_0_0_4px_rgba(73,115,182,0.1)] font-bold text-center outline-none disabled:bg-neutral-300 disabled:text-neutral-600 disabled:border-[1px] disabled:border-neutral-500">Daftar</button>
+            <section class="flex items-center gap-7">
+              <section class="cursor-pointer">
+                <img class="w-6" src="../../assets/cart.svg" alt="cart" />
+              </section>
+              <section v-if="isLogin" @click="showDropdownProfile" class="dropdown-profile relative">
+                  <section>
+                    <div data-v-dd33f8c4="" data-v-282fc1c4="" class="flex items-center justify-center min-w-[44px] w-[44px] h-[44px] bg-slate-300 rounded-full cursor-pointer" >
+                      <!-- <img alt="image-profile" src="" lazy="loaded"> -->
+                    </div>
+                  </section>
+                  <nav v-if="isAvatarDropdown" class="absolute -left-[24px] top-6 mt-10 bg-white border-[1px] solid border-[#DADCE0] rounded-[8px] p-[24px] flex items-stretch">
+                  <section class="flex flex-col">
+                    <section class="flex">
+                      <div class="profile-avatar">
+                        <div data-v-dd33f8c4="" data-v-282fc1c4="" class="flex items-center justify-center min-w-[44px] w-[44px] h-[44px] bg-slate-300 rounded-full" >
+                          <!-- <img alt="image-profile" src="" lazy="loaded"> -->
+                        </div>
+                      </div>
+                      <section class="ml-3 w-36 overflow-hidden">
+                        <h6>Faisal Chakiki</h6>
+                        <p class="truncate" aria-label="faisalchakiki012018@gmail.com">faisalchakiki012018@gmail.com</p>
+                      </section>  
+                    </section>
+                    <div class="h-[0.4px] bg-neutral-300 my-[14px]"></div>
+                    <p class="font-bold mb-[14px] cursor-pointer">Profile</p>
+                    <p @click="handleLogout" class="font-bold cursor-pointer">Logout</p>
+                  </section>
+                </nav>
+              </section>
+              <section v-else class="flex gap-5">
+                  <button
+                      @click="moveLogin"
+                      type="button"
+                      class="rounded-[4px] py-[12px] px-[20px] text-p bg-white text-blue-600 border-[1px] border-blue-500 hover:bg-blue-100 focus:shadow-[0_0_0_4px_rgba(73,115,182,0.1)] font-bold text-center outline-none disabled:bg-neutral-300 disabled:text-neutral-600 disabled:border-[1px] disabled:border-neutral-500">Masuk</button>
+                  <button
+                  @click="moveRegister"
+                      type="button"
+                      class="rounded-[4px] py-[12px] px-[20px] text-p bg-blue-600 text-neutral-100 border-[1px] border-blue-600 hover:bg-blue-700 hover:border-blue-700 focus:shadow-[0_0_0_4px_rgba(73,115,182,0.1)] font-bold text-center outline-none disabled:bg-neutral-300 disabled:text-neutral-600 disabled:border-[1px] disabled:border-neutral-500">Daftar</button>
+              </section>
             </section>
           </main>
     </nav>
@@ -105,6 +141,9 @@
   import Logo from '../atoms/LogoFazz.vue';
   import ArrowUp from '../atoms/ArrowUp.vue';
   import ArrowDown from '../atoms/ArrowDown.vue';
+
+  const token = localStorage.getItem('token')
+
 export default {
   components:{
       Logo,
@@ -116,6 +155,13 @@ export default {
         isOpenNav1 : false,
         isOpenNav2 : false,
         isOpenNav3 : false,
+        isAvatarDropdown : false,
+        isLogin: token || false
+      }
+    },
+    computed:{
+      setIslogin(){
+        this.isLogin = !this.isLogin
       }
     },
     methods:{
@@ -123,6 +169,7 @@ export default {
         this.isOpenNav1 = false
         this.isOpenNav2 = false
         this.isOpenNav3 = false
+        this.isAvatarDropdown = false
       },
       showNav1(){
         if(this.isOpenNav1 === false){
@@ -142,6 +189,22 @@ export default {
         }
         this.isOpenNav3 = !this.isOpenNav3
       },
+      showDropdownProfile(){
+        if(this.isAvatarDropdown === false){
+          this.closeNav()
+        }
+        this.isAvatarDropdown = !this.isAvatarDropdown
+      },
+      handleLogout(){
+        localStorage.removeItem('token')
+        this.isLogin = false
+      },
+      moveLogin(){
+        this.$router.push('/login')
+      },
+      moveRegister(){
+        this.$router.push('/register')
+      }
     }
 }
 </script>

@@ -1,7 +1,7 @@
 <template >
   <div  class="relative" aria-labelledby="modal-title" role="dialog" aria-modal="true">
     <div class="fixed inset-0 bg-gray-500 z-40 bg-opacity-75 transition-opacity"></div>
-    <div class="fixed inset-0 z-50 overflow-y-auto">
+    <div class="fixed inset-0 z-50 overflow-y-auto my-20">
       <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0"> 
         <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all py-5 px-3 sm:my-8 sm:w-full sm:max-w-lg">
           <form @submit.prevent="handleSubmit" class="w-full">
@@ -64,7 +64,7 @@
                     type="text"
                     label="Is Work"
                     name="is-work"
-                    placeholder="Masukan true or false"
+                    placeholder="Masukan false or true"
                     @on-change="handleInput"/>
                 <Input
                     type="number"
@@ -162,7 +162,11 @@
             this.dataMinicamp.endDate = val.value
           }
           if(val.name === 'is-work'){
-            this.dataMinicamp.isWork = Boolean(val.value)
+            if(val.value === 'false'){
+            this.dataMinicamp.isWork = false
+            }else{
+              this.dataMinicamp.isWork = Boolean(val.value)
+            }
           }
           if(val.name === 'price'){
             this.dataMinicamp.price = val.value

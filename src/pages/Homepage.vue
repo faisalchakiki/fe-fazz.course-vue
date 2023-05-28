@@ -12,13 +12,16 @@
     <NavbarSection :options="options" />
     <section>
       <Modal @on-confirm="handleConfirm" v-if="isModal" />
-      <div class="container-class pt-10 mx-auto text-right">
+      <div v-if="isLogin === token" class="container-class pt-10 mx-auto text-right">
         <button @click="handleModal" class="border-2 rounded-md p-2 bg-primary-orange text-white tracking-wide border-primary-orange">Add Minicamp</button>
       </div>
-      <main class="container-class py-10 mx-auto grid grid-cols-3 gap-8 z-10">
-      <div v-for="item in dataMinicamps" :key="item.id">
-        <CardMinicamp :options="item" />
-      </div>
+      <main class="container-class py-10 mx-auto grid grid-cols-3 gap-8 z-10 items-stretch">
+        <button v-if="isReadyData === false" type="button" class="bg-orange-500 text-white p-3 rounded-md col-start-2" disabled>
+          Processing...
+        </button>
+        <div v-if="isReadyData === true" v-for="item in dataMinicamps" :key="item.id">
+          <CardMinicamp :options="item" />
+        </div>
     </main>
     </section>
   </main>
@@ -36,20 +39,25 @@
   import NavbarSection from '../components/molecules/NavbarSection.vue';
   import CardMinicamp from '../components/molecules/CardMinicamp.vue';
  
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem('token') 
+  const tempToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImNyZWF0ZWRfYXQiOiIyMDIzLTA1LTI2VDA1OjU4OjI0LjI0ODI1KzAwOjAwIiwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJGRaeXJuYUQyS0lrbm5zZ2p4RnRkb082a2p5SHYzSXo1ZmNFMjZKM3huNC9yOVJ5S1prTkRXIiwiaWF0IjoxNjg1MTA0MzY2fQ.s8cgoCIfngy75U-VzF-SIP52u04qZ33b7myhpcwyUHI'
   const config = {
-    headers: { Authorization: token }
+    headers: { Authorization: token || tempToken }
   };
 
   interface Data {
     options : IOptions[]
     dataMinicamps : IDataMinicamp[]
     isModal : boolean
+    isLogin : string
+    token : string | boolean
+    isReadyData: boolean
   }
 
   interface IOptions {
     id : number
     value : string
+    active : boolean
   }
 
   interface IDataMinicamp {
@@ -73,14 +81,20 @@
         return{
           options:[
             {id : 1,
-            value : 'Semua'},
+            value : 'Semua',
+            active: true},
             {id : 2,
-            value : 'Disalurkan'},
+            value : 'Disalurkan',
+            active: false},
             {id : 3,
-            value : 'Tidak Disalurkan'},
+            value : 'Tidak Disalurkan',
+            active: false},
         ],
         dataMinicamps : [] as IDataMinicamp[],
-        isModal : false
+        isModal : false,
+        isLogin : token || tempToken,
+        token : token || false,
+        isReadyData: false
       }
     },
     components:{
@@ -94,8 +108,10 @@
     },
     methods:{
       async fetchData() {
+        this.isReadyData = false
         const response = await axios.get('https://fazz-track-sample-api.vercel.app/minicamp', config)
         this.dataMinicamps = response.data.data
+        this.isReadyData = true
       },
       async insertData(data : any) {
         const response = await axios.post('https://fazz-track-sample-api.vercel.app/minicamp',data, config)

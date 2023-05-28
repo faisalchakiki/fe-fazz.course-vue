@@ -1,14 +1,14 @@
 <template lang="">
   <section class="card border rounded-md overflow-hidden w-full">
         <div class="relative" >
-          <img src="https://minibootcamp.s3.ap-southeast-1.amazonaws.com/banner/file-1683294642499" alt="Fazztrack image" draggable="false" class="w-full cover" />
+          <img :src="options.trainerPicture" alt="Fazztrack image" draggable="false" class="w-full cover" />
           <div v-if="options.isWork === true" class='absolute top-2 left-2 border-2 rounded-md p-1 bg-[#fef3ec] border-primary-orange'>
             <p class="text-sm text-primary-orange">Disalurkan Kerja</p>
           </div>
         </div>    
         <div class="p-4 flex flex-col">
           <h1 class="title text-xl font-bold">{{options.title}}</h1>
-          <section class="flex items-center gap-2 my-2">
+          <section class="flex flex-1 items-center gap-2 my-2">
             <img class="w-5" alt="calendar-logo" src="../../assets/icon/calendar.svg" />
             <p>{{options.startDate}} - {{options.endDate}}</p>
           </section>
@@ -26,7 +26,7 @@
             <p class="text-blue-dongker font-semibold">Daftar Sekarang</p>
             <img class="w-5 mt-1" alt="right-arrow" src="../../assets/icon/right-arrow.svg" />
           </div>
-          <div class="flex justify-center my-2 items-center gap-2">
+          <div v-if="isLogin" class="flex justify-center my-2 items-center gap-2">
             <p @click="deleteCourse(options.id)" class="text-white bg-red-500 p-2 rounded-md text-sm font-semibold cursor-pointer">Hapus Course</p>
             <p @click="handleModal(options.id)" class="text-white bg-yellow-500 p-2 rounded-md text-sm font-semibold cursor-pointer">Edit Course</p>
           </div>
@@ -51,7 +51,8 @@
       return {
         id: 0,
         isModal : false,
-        price : this.options.price
+        price : this.options.price,
+        isLogin : token || false
       }
     },
     props:{
@@ -69,6 +70,7 @@
         }
       },
       handleModal(id : number){
+        console.log(this.options)
         this.id = id
         this.isModal = !this.isModal
       },
@@ -87,6 +89,9 @@
           this.editCourse(val)
         }
       },
+    },
+    mounted(){
+      console.log(this.options)
     }
   }
 </script>
