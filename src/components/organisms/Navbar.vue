@@ -1,7 +1,7 @@
 <template>
-  <section class="bg-white sticky top-0 right-0 left-0 h-20 flex justify-center items-center shadow-1">
+  <section class="bg-white sticky top-0 right-0 left-0 h-20 z-40 flex justify-center items-center shadow-1">
     <!-- <div class="fixed z-60 inset-0 bg-[#494c51] opacity-50"></div> -->
-    <nav class="container bg-white flex items-center">
+    <nav class="container-class bg-white flex items-center">
           <section class="w-56">
             <Logo />
           </section>
