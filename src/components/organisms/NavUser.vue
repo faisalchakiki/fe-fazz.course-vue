@@ -41,8 +41,10 @@
                     <section>
                       <p class="text-[#b6bac0] font-medium mb-[16px] uppercase whitespace-nowrap">Online Course</p>
                       <section class="flex flex-col items-start gap-[6px]">
-                        <a rel="noopener noreferrer" class="flex items-center font-bold whitespace-nowrap py-[4px]">Lihat Semua <svg data-v-cf1ec82f="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="icon ml-[8px]" width="16px" height="16px" viewBox="0 0 24 24"><path fill="currentColor" d="M4 11v2h12l-5.5 5.5l1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5L16 11H4Z"></path></svg>
-                        </a>
+                        <div @click="moveVidioPage">
+                          <a  rel="noopener noreferrer" class="flex items-center font-bold whitespace-nowrap py-[4px]">Lihat Semua <svg data-v-cf1ec82f="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="icon ml-[8px]" width="16px" height="16px" viewBox="0 0 24 24"><path fill="currentColor" d="M4 11v2h12l-5.5 5.5l1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5L16 11H4Z"></path></svg>
+                          </a>
+                        </div>
                       </section>
                     </section>
                   </section>
@@ -204,6 +206,10 @@ export default {
       },
       moveRegister(){
         this.$router.push('/register')
+      },
+      moveVidioPage(){
+        this.$router.push('/online-course')
+        
       }
     }
 }
