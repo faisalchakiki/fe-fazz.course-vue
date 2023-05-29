@@ -125,7 +125,7 @@
         if(response.status === 200){
           this.isAlert = true
           setTimeout(() => {
-            this.fetchData()
+            window.location.reload()
           }, 2000);
         }else{
           alert('error insert')
