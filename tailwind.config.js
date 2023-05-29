@@ -2,6 +2,7 @@
 export default {
   content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
+    extend: {},
     container: {
       padding: {
         DEFAULT: "1rem",
@@ -11,6 +12,13 @@ export default {
         "2xl": "6rem",
       },
     },
+    extend: {
+      colors: {
+        'second-gray': '#797e86',
+        'blue-dongker': '#2452a8',
+        'primary-orange': '#ef6807',
+      },
+    }
   },
 
   plugins: [require("daisyui")],
