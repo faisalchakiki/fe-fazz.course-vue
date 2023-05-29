@@ -1,5 +1,5 @@
 <template>
-    <div class="card max-w-[250px] bg-base-100 shadow-md rounded-md flex justify-center mb-5">
+    <div class="card max-w-[250px] bg-base-100 shadow-md rounded-md flex justify-center mb-5 hover:scale-[1.03] duration-100">
         <figure>
             <img
                 :src="cover"
@@ -29,8 +29,6 @@
     export default defineComponent({
         data() {
             return {
-                background: "https://elearn-production.s3.ap-southeast-1.amazonaws.com/course/icon/001f1976" +
-                        "ffcce7548b1914f5b33935eb",
                 iconStar: [1, 2, 3, 4, 5]
             }
         },

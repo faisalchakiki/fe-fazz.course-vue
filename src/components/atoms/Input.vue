@@ -55,6 +55,11 @@
             }
 
         },
+        watch:{
+            defaultValue(newValue, _oldValue){
+                this.inputValue = newValue
+            }
+        },
         computed:{
             onInput:{
                 get(){
