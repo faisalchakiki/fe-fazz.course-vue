@@ -10,16 +10,18 @@
          <LogoText :label="`Live Class`" type="live-class" />
       </div>
     </header>
-    <NavbarSection :options="options" />
+    <NavbarSection @on-selected="filterMinicamp" :options="options" />
     <section>
       <Modal @on-confirm="handleConfirm" v-if="isModal" />
       <div v-if="isLogin === token" class="container-class pt-10 mx-auto text-right">
-        <button @click="handleModal" class="border-2 rounded-md p-2 bg-primary-orange text-white tracking-wide border-primary-orange">Add Minicamp</button>
+        <button @click="handleModal" class="border-2 rounded-md py-2 px-3 bg-primary-orange text-white tracking-wide border-primary-orange"><i class="fa-solid fa-circle-plus fa-2xl"></i></button>
       </div>
       <main class="container-class py-10 mx-auto grid grid-cols-3 gap-8 z-10 items-stretch">
-        <button v-if="isReadyData === false" type="button" class="bg-orange-500 text-white p-3 rounded-md col-start-2" disabled>
+        <div v-if="isReadyData === false" class="h-[30vh] col-start-2">
+          <button v-if="isReadyData === false" type="button" class="bg-orange-500 text-white p-3 rounded-md w-full" disabled>
           Processing...
-        </button>
+          </button>
+        </div>
         <div v-if="isReadyData === true" v-for="item in dataMinicamps" :key="item.id">
           <CardMinicamp :options="item" />
         </div>
@@ -123,7 +125,7 @@
         if(response.status === 200){
           this.isAlert = true
           setTimeout(() => {
-            this.fetchData()
+            window.location.reload()
           }, 2000);
         }else{
           alert('error insert')
@@ -140,6 +142,19 @@
           this.insertData(val)
         }
       },
+      async filterMinicamp(data : any){
+        if(data.value === 'Disalurkan'){
+          await this.fetchData()
+          const dataFilter = this.dataMinicamps.filter(val => val.isWork === true)
+          this.dataMinicamps = dataFilter
+        }else if(data.value === 'Tidak Disalurkan'){
+          await this.fetchData()
+          const dataFilter = this.dataMinicamps.filter(val => val.isWork === false)
+          this.dataMinicamps = dataFilter  
+        }else{
+          await this.fetchData()
+        }
+      }
     },
     mounted(){
       this.fetchData()
