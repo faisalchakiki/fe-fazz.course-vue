@@ -5,6 +5,10 @@
           <div v-if="options.isWork === true" class='absolute top-2 left-2 border-2 rounded-md p-1 bg-[#fef3ec] border-primary-orange'>
             <p class="text-sm text-primary-orange">Disalurkan Kerja</p>
           </div>
+          <div v-if="isLogin" class="absolute top-0 right-0 flex items-center gap-2">
+            <button @click="handleModal(options.id)" class="bg-green-500 w-8 h-8 rounded-full flex justify-center items-center"><i class="fa-regular fa-pen-to-square fa-md"></i></button>
+            <button @click="showAlertDelete(options.id)" class="bg-red-400 w-8 h-8 rounded-full flex justify-center items-center"><i class="fa-solid fa-trash fa-md"></i></button>
+          </div>
         </div>    
         <div class="p-4 flex flex-col">
           <h1 class="title text-xl font-bold">{{options.title}}</h1>
@@ -26,10 +30,6 @@
             <p class="text-blue-dongker font-semibold">Daftar Sekarang</p>
             <img class="w-5 mt-1" alt="right-arrow" src="../../assets/icon/right-arrow.svg" />
           </div>
-          <div v-if="isLogin" class="flex justify-center my-2 items-center gap-2">
-            <p @click="deleteCourse(options.id)" class="text-white bg-red-500 p-2 rounded-md text-sm font-semibold cursor-pointer">Hapus Course</p>
-            <p @click="handleModal(options.id)" class="text-white bg-yellow-500 p-2 rounded-md text-sm font-semibold cursor-pointer">Edit Course</p>
-          </div>
         </div>
         <Modal :id="id" @on-confirm="handleConfirm" v-if="isModal === true" />
   </section>
@@ -37,7 +37,8 @@
 <script lang="ts">
   import axios from 'axios'
   import Modal from '../../components/molecules/EditMinicamp.vue'
-
+  import Swal from 'sweetalert2'
+  
   const token = localStorage.getItem('token')
   const config = {
     headers: { Authorization: token }
@@ -63,14 +64,12 @@
     },
     methods: {
       async deleteCourse(id : number){
-        const confirmResponse = confirm('Minicamp will be removed, are you sure?')
-        if(confirmResponse){
           const response = await axios.delete(`https://fazz-track-sample-api.vercel.app/minicamp/${id}`, config)
           if(response.status === 200){
-            alert('Success delete course')
             window.location.reload()
+          }else{
+            alert('failed internal server error')
           }
-        }
       },
       handleModal(id : number){
         this.id = id
@@ -79,8 +78,10 @@
       async editCourse(data : any) {
         const response = await axios.put(`https://fazz-track-sample-api.vercel.app/minicamp/${data.id}`,data, config)
         if(response.status === 200){
-          alert('Success Edit Course')
-          window.location.reload()
+          Swal.fire('Edit Success!', '', 'success')
+          setTimeout(() => {
+            window.location.reload()
+          }, 1500);
         }
       },
       handleConfirm(val : any){
@@ -91,6 +92,24 @@
           this.editCourse(val)
         }
       },
+      showAlertDelete(id : number){
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "Minicamp will be removed, are you sure?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this.deleteCourse(id)
+            Swal.fire('Delete Success!', '', 'success')
+          } else {
+            Swal.fire('Delete Failed', '', 'info')
+          }
+        })
+      }
     },
   }
 </script>
