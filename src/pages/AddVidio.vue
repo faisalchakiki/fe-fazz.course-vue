@@ -139,14 +139,10 @@
                 }
                })
                .then((_res)=>{
-                this.$router.push('/login')
                 console.log(_res);
-                
+                this.$router.push('/login')
                })
             
-            },
-            moveRegiter(){
-                this.$router.push("/login")
             }
         }
     })
