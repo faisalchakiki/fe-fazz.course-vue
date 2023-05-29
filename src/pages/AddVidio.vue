@@ -140,7 +140,7 @@
                })
                .then((_res)=>{
                 console.log(_res);
-                this.$router.push('/login')
+                this.$router.push('/online-course')
                })
             
             }
