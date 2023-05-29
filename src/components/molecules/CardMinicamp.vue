@@ -5,6 +5,10 @@
           <div v-if="options.isWork === true" class='absolute top-2 left-2 border-2 rounded-md p-1 bg-[#fef3ec] border-primary-orange'>
             <p class="text-sm text-primary-orange">Disalurkan Kerja</p>
           </div>
+          <div v-if="isLogin" class="absolute top-0 right-0 flex items-center gap-2">
+            <button @click="handleModal(options.id)" class="bg-green-500 w-8 h-8 rounded-full flex justify-center items-center"><i class="fa-regular fa-pen-to-square fa-md"></i></button>
+            <button @click="deleteCourse(options.id)" class="bg-red-400 w-8 h-8 rounded-full flex justify-center items-center"><i class="fa-solid fa-trash fa-md"></i></button>
+          </div>
         </div>    
         <div class="p-4 flex flex-col">
           <h1 class="title text-xl font-bold">{{options.title}}</h1>
@@ -25,10 +29,6 @@
           <div class="flex justify-center items-center gap-2 cursor-pointer">
             <p class="text-blue-dongker font-semibold">Daftar Sekarang</p>
             <img class="w-5 mt-1" alt="right-arrow" src="../../assets/icon/right-arrow.svg" />
-          </div>
-          <div v-if="isLogin" class="flex justify-center my-2 items-center gap-2">
-            <p @click="deleteCourse(options.id)" class="text-white bg-red-500 p-2 rounded-md text-sm font-semibold cursor-pointer">Hapus Course</p>
-            <p @click="handleModal(options.id)" class="text-white bg-yellow-500 p-2 rounded-md text-sm font-semibold cursor-pointer">Edit Course</p>
           </div>
         </div>
         <Modal :id="id" @on-confirm="handleConfirm" v-if="isModal === true" />
