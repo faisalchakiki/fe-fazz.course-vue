@@ -139,7 +139,7 @@
                 }
                })
                .then((_res)=>{
-                // this.$router.push('/login')
+                this.$router.push('/login')
                 console.log(_res);
                 
                })

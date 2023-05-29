@@ -1,9 +1,7 @@
 <template>
-    <div class="toast">
+    <div class="toast z-[120]">
         <div class="alert alert-success">
-            <div>
-                <span>{{ title }}</span>
-            </div>
+            <p class="text-white text-lg text-center">{{ title }}</p>
         </div>
     </div>
 </template>

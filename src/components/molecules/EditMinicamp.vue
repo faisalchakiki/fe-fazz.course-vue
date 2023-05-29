@@ -155,7 +155,7 @@
       },
       components :{
         Input,
-        BtnPrimary
+        BtnPrimary,
       },
       methods:{
         handlecConfirm(val : string){
@@ -224,7 +224,6 @@
           const response = await axios.get(`https://fazz-track-sample-api.vercel.app/minicamp/${id}`, config)
           this.dataMinicamp = response.data.data
           this.isReady = true
-          console.log(this.dataMinicamp)
         }
       },
       mounted(){
