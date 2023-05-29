@@ -5,16 +5,15 @@
         role="dialog"
         aria-modal="true">
         <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
-
         <div class="fixed inset-0 z-10 overflow-y-auto">
             <div
-                class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0 mt-20 ">
                 <div
-                    class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                    class="relative  transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 " >
                         <div class="w-full">
                             <div class="my-5">
-                                <p class="text-center font-semibold text-xl">Edit Vidio</p>
+                                <p class="text-center font-semibold text-xl">Edit Vidio {{idVidio}}</p>
                             </div>
                             <div class="w-full mb-4">
                                 <Input
@@ -86,7 +85,6 @@
             </div>
         </div>
     </div>
-
 </template>
 <script lang="ts">
     import {defineComponent} from 'vue';
@@ -108,23 +106,21 @@
         price: number;
     }
 
-    // interface IData{
-    //     name:string,
-    //     value:string
-    // }
-
     const token = localStorage.getItem('token')
 
     export default defineComponent({
         data(): Data {
-            return {vidio: {
-                title:'',
-                description:'',
-                cover:'',
-                rating:0,
-                level:'',
-                price:0
-            }, idVidio: this.id}
+            return {
+                vidio: {
+                    title: '',
+                    description: '',
+                    cover: '',
+                    rating: 0,
+                    level: '',
+                    price: 0
+                },
+                idVidio: this.id
+            }
         },
         props: {
             id: {
@@ -145,20 +141,19 @@
                     this.vidio.title = data.value
                 } else if (data.name === 'description') {
                     this.vidio.description = data.value
-                }else if (data.name === 'cover') {
+                } else if (data.name === 'cover') {
                     this.vidio.cover = data.value
-                }else if (data.name === 'rating') {
+                } else if (data.name === 'rating') {
                     this.vidio.rating = data.value
-                }else if (data.name === 'level') {
+                } else if (data.name === 'level') {
                     this.vidio.level = data.value
-                }else{
+                } else {
                     this.vidio.price = data.value
                 }
                 console.log(this.vidio);
-                
+
             },
             handleGetById() {
-                // console.log(this.id);
                 axios
                     .get(`https://fazz-track-sample-api.vercel.app/video/${this.id}`, {
                         headers: {
@@ -170,16 +165,21 @@
                         this.vidio = res.data.data
                     })
             },
-            handleEdit(){
+            handleEdit() {
                 axios
-                    .put(`https://fazz-track-sample-api.vercel.app/video/${this.id}`, this.vidio, {
-                        headers: {
-                            Authorization: token
+                    .put(
+                        `https://fazz-track-sample-api.vercel.app/video/${this.id}`,
+                        this.vidio,
+                        {
+                            headers: {
+                                Authorization: token
+                            }
                         }
-                    })
+                    )
                     .then((res) => {
                         console.log(res.data.data);
                         this.$emit('on-edit', '')
+                        this.$emit('on-click', "")
                     })
             }
         },
