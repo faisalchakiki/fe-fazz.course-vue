@@ -1,7 +1,7 @@
 <template lang="">
   <section class="card border rounded-md overflow-hidden w-full">
-        <div class="relative" >
-          <img :src="options.trainerPicture" alt="Fazztrack image" draggable="false" class="w-full cover" />
+        <div class="relative w-full h-[200px]" >
+          <img :src="options.trainerPicture" alt="Fazztrack image" draggable="false" class="w-full cover h-[100%]" />
           <div v-if="options.isWork === true" class='absolute top-2 left-2 border-2 rounded-md p-1 bg-[#fef3ec] border-primary-orange'>
             <p class="text-sm text-primary-orange">Disalurkan Kerja</p>
           </div>
