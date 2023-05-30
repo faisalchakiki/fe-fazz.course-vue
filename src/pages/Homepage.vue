@@ -10,18 +10,16 @@
          <LogoText :label="`Live Class`" type="live-class" />
       </div>
     </header>
-    <NavbarSection :options="options" />
+    <NavbarSection @on-selected="filterMinicamp" :options="options" />
     <section>
       <Modal @on-confirm="handleConfirm" v-if="isModal" />
       <div v-if="isLogin === token" class="container-class pt-10 mx-auto text-right">
-        <button @click="handleModal" class="border-2 rounded-md p-2 bg-primary-orange text-white tracking-wide border-primary-orange">Add Minicamp</button>
+        <button @click="handleModal" class="border-2 rounded-md py-2 px-3 bg-primary-orange text-white tracking-wide border-primary-orange"><i class="fa-solid fa-circle-plus fa-2xl"></i></button>
       </div>
       <main class="container-class py-10 mx-auto grid grid-cols-3 gap-8 z-10 items-stretch">
-        <button v-if="isReadyData === false" type="button" class="bg-orange-500 text-white p-3 rounded-md col-start-2" disabled>
-          Processing...
-        </button>
-        <div v-if="isReadyData === true" v-for="item in dataMinicamps" :key="item.id">
-          <CardMinicamp :options="item" />
+        <SkeletonMinicamp v-if="isReadyData === false" />
+        <div v-for="item in dataMinicamps" :key="item.id">
+          <CardMinicamp v-if="isReadyData === true" :options="item" />
         </div>
     </main>
     </section>
@@ -40,6 +38,7 @@
   import Modal from '../components/molecules/AddMinicamp.vue'
   import NavbarSection from '../components/molecules/NavbarSection.vue';
   import CardMinicamp from '../components/molecules/CardMinicamp.vue';
+  import SkeletonMinicamp from '../components/atoms/SkeletonMinicamp.vue'
  
   const token = localStorage.getItem('token') 
   const tempToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImNyZWF0ZWRfYXQiOiIyMDIzLTA1LTI2VDA1OjU4OjI0LjI0ODI1KzAwOjAwIiwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJGRaeXJuYUQyS0lrbm5zZ2p4RnRkb082a2p5SHYzSXo1ZmNFMjZKM3huNC9yOVJ5S1prTkRXIiwiaWF0IjoxNjg1MTA0MzY2fQ.s8cgoCIfngy75U-VzF-SIP52u04qZ33b7myhpcwyUHI'
@@ -109,7 +108,8 @@
       NavbarSection,
       CardMinicamp,
       Modal,
-      ToastSuccess
+      ToastSuccess,
+      SkeletonMinicamp
     },
     methods:{
       async fetchData() {
@@ -123,7 +123,7 @@
         if(response.status === 200){
           this.isAlert = true
           setTimeout(() => {
-            this.fetchData()
+            window.location.reload()
           }, 2000);
         }else{
           alert('error insert')
@@ -140,6 +140,19 @@
           this.insertData(val)
         }
       },
+      async filterMinicamp(data : any){
+        if(data.value === 'Disalurkan'){
+          await this.fetchData()
+          const dataFilter = this.dataMinicamps.filter(val => val.isWork === true)
+          this.dataMinicamps = dataFilter
+        }else if(data.value === 'Tidak Disalurkan'){
+          await this.fetchData()
+          const dataFilter = this.dataMinicamps.filter(val => val.isWork === false)
+          this.dataMinicamps = dataFilter  
+        }else{
+          await this.fetchData()
+        }
+      }
     },
     mounted(){
       this.fetchData()
