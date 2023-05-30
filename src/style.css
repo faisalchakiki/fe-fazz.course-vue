@@ -1,15 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 
 *{
   font-family: 'Inter', sans-serif;
 }
 
-body{
-  height: 200vh;
+.font-sora{
+  font-family: "Sora",sans-serif!important;
 }
 
 .navbar-side{
@@ -25,42 +26,42 @@ body{
   box-shadow: var(--tw-ring-offset-shadow,0 0 #0000),var(--tw-ring-shadow,0 0 #0000),var(--tw-shadow);
 }
 
-.container {
+.container-class {
   width: 100%;
 }
 
 @media only screen and (min-width: 460px){
-  .container {
+  .container-class {
     width: 430px;
   }
 }
 
 @media only screen and (min-width: 640px){
-  .container {
+  .container-class {
     width: 610px;
 }
 }
 
 @media only screen and (min-width: 768px){
-  .container {
+  .container-class {
     width: 730px;
 }
 }
 
 @media only screen and (min-width: 1024px) {
-  .container {
+  .container-class {
     width: 990px;
 }
 }
 
 @media only screen and (min-width: 1280px) {
-  .container {
+  .container-class {
     width: 1140px;
   }
 }
 
 @media only screen and (min-width: 1536px) {
-  .container {
+  .container-class {
     width: 1140px;
   }
 }

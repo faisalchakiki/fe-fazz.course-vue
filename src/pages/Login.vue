@@ -6,7 +6,7 @@
                     <LogoFazz class="mb-5"/>
                     <p class="text-2xl font-semibold mb-2">Selamat Datang</p>
                     <p class="text-normal mb-3">Belum punya akun Fazzrack?
-                        <span @click="moveLogin" class="text-[#ef6807] font-bold cursor-pointer">Daptar disini</span>
+                        <span @click="moveLogin" class="text-[#ef6807] font-bold cursor-pointer">Daftar disini</span>
                     </p>
                 </div>
                 <div class="w-full">
@@ -16,7 +16,7 @@
                             label="Email"
                             name="email"
                             placeholder="Masukan Email"
-                            @on-change="hnaldeInput"/>
+                            @on-change="handleInput"/>
                     </div>
                     <div class="w-full mb-4">
                         <Input
@@ -24,7 +24,7 @@
                             label='password'
                             name='password'
                             placeholder='Masukan Kata Sandi'
-                            @on-change="hnaldeInput"/>
+                            @on-change="handleInput"/>
                     </div>
                 </div>
                 <div class="w-full flex justify-between items-center">
@@ -42,23 +42,22 @@
                 <p  class="w-full text-center my-4">atau masuk menggunakan</p>
                 <BtnGoogle title="google"/>
             </form>
+            <ToastSuccess v-if="toastStatus" title="Succes Login"/>
         </div>
     </div>
 </template>
 <script lang='ts'>
     import {defineComponent} from 'vue';
-    import Input from '../components/atom/Input.vue';
-    import BtnPrimary from "../components/atom/BtnPrimary.vue"
-    import BtnGoogle from '../components/atom/BtnGoogle.vue';
+    import Input from '../components/atoms/Input.vue';
+    import BtnPrimary from "../components/atoms/BtnPrimary.vue"
+    import BtnGoogle from '../components/atoms/BtnGoogle.vue';
     import LogoFazz from '../components/atoms/LogoFazz.vue';
+    import ToastSuccess from '../components/atoms/ToastSuccess.vue';
     import axios from 'axios';
-
-
-
-
 
     interface Data {
         form: IForm
+        toastStatus:boolean
     }
 
     interface IForm {
@@ -73,17 +72,19 @@
                 form: {
                     email: "",
                     password: ""
-                }
+                },
+                toastStatus:false
             }
         },
         components: {
             Input,
             BtnPrimary,
             BtnGoogle,
-            LogoFazz
+            LogoFazz,
+            ToastSuccess
         },
         methods: {
-            hnaldeInput(data : any) {
+            handleInput(data : any) {
                 if (data.name === "email") {
                     this.form.email = data.value
                 } else {
@@ -95,6 +96,12 @@
                 axios.post(`https://fazz-track-sample-api.vercel.app/login`, this.form)
                .then((_res)=>{
                 localStorage.setItem('token', _res.data.data.token)
+                this.toastStatus = true
+                setTimeout(() => {
+                //    this.$router.push('/') 
+                    window.location.href = '/'
+                    this.toastStatus = false
+                }, 2000);
                })
             },
             moveLogin(){

@@ -1,6 +1,6 @@
 <template>
    <footer class="bg-white flex flex-col items-center gap-[24px] text-neutral-11 py-[32px] md:py-[56px]">
-    <section class="flex flex-col lg:flex-row justify-between container gap-[24px] md:gap-[28px]">
+    <section class="flex flex-col lg:flex-row justify-between container-class gap-[24px] md:gap-[28px]">
       <section class="flex flex-col items-start lg:max-w-[348px] gap-[16px]">
         <Logo />
         <p class="py-[4px]"> Fazztrack adalah program pelatihan yang berkomitmen untuk mencetak developer yang profesional dan memberikan kesempatan untuk berkarir di perusahaan ternama. </p>
@@ -97,10 +97,10 @@
       </section>
       </section>
     </section>
-    <div class="container">
+    <div class="container-class">
               <hr class="border-neutral-4">
     </div>
-    <section class="container flex flex-col md:flex-row-reverse justify-between gap-[24px]">
+    <section class="container-class flex flex-col md:flex-row-reverse justify-between gap-[24px]">
               <section class="flex flex-col md:flex-row gap-[16px]">
                 <section class="flex items-center gap-[8px]">
                   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="icon" style="" width="18px" height="18px" viewBox="0 0 24 24" data-v-cf1ec82f="">

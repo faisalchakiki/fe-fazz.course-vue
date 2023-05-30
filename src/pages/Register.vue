@@ -6,7 +6,7 @@
                     <div>
                         <LogoFazz/>
                     </div>
-                    <p class="text-xl font-semibold mb-2">Daptar dan Mulai Belajar</p>
+                    <p class="text-xl font-semibold mb-2">Daftar dan Mulai Belajar</p>
                     <p class="text-normal mb-3">Sudah punya akun Fazzrack?
                         <span  @click="moveRegiter" class="text-[#ef6807] cursor-pointer">Masuk disini</span>
                     </p>
@@ -18,7 +18,7 @@
                             label="Nama Lengkap"
                             name="fullname"
                             placeholder="Masukan nama lengkap..."
-                            @on-change="hnaldeInput"/>
+                            @on-change="handleInput"/>
                     </div>
                     <div class="w-full mb-4">
                         <Input
@@ -26,7 +26,7 @@
                             label="Email"
                             name="email"
                             placeholder="Masukan Email..."
-                            @on-change="hnaldeInput"/>
+                            @on-change="handleInput"/>
                     </div>
                     <div class="w-full mb-4">
                         <Input
@@ -34,7 +34,7 @@
                             label="No. Handphone"
                             name="handphone"
                             placeholder="Masukan No. handphone..."
-                            @on-change="hnaldeInput"/>
+                            @on-change="handleInput"/>
                     </div>
                     <div class="w-full mb-4">
                         <Input
@@ -42,7 +42,7 @@
                             label='Kata Sandi'
                             name='password'
                             placeholder='Masukan Kata Sandi...'
-                            @on-change="hnaldeInput"/>
+                            @on-change="handleInput"/>
                     </div>
                     <div class="w-full mb-4">
                         <Input
@@ -50,7 +50,7 @@
                             label='Kata Sandi'
                             name='passwordConfirm'
                             placeholder='Masukan ulang Kata Sandi...'
-                            @on-change="hnaldeInput"/>
+                            @on-change="handleInput"/>
                     </div>
                 </div>
                 <div class="w-full flex items-center my-6">
@@ -64,16 +64,16 @@
                         <p class="text-[#2557a7] font-bold">Syarat dan Ketentuan</p>
                     </div>
                 </div>
-                <BtnPrimary title="Daptar Fazztrack"/>
+                <BtnPrimary title="Daftar Fazztrack"/>
             </form>
         </div>
     </div>
 </template>
 <script lang='ts'>
     import {defineComponent} from 'vue';
-    import Input from '../components/atom/Input.vue';
-    import BtnPrimary from "../components/atom/BtnPrimary.vue"
-    import BtnGoogle from '../components/atom/BtnGoogle.vue';
+    import Input from '../components/atoms/Input.vue';
+    import BtnPrimary from "../components/atoms/BtnPrimary.vue"
+    import BtnGoogle from '../components/atoms/BtnGoogle.vue';
     import LogoFazz from '../components/atoms/LogoFazz.vue';
     import axios from "axios"
 
@@ -103,7 +103,7 @@
             LogoFazz
         },
         methods: {
-            hnaldeInput(data : any) {
+            handleInput(data : any) {
                 if (data.name === "email") {
                     this.form.email = data.value
                 } else {
