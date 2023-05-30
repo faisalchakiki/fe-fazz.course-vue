@@ -114,6 +114,8 @@
 
     const token = localStorage.getItem('token')
 
+    const tempToken =  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImNyZWF0ZWRfYXQiOiIyMDIzLTA1LTI2VDA1OjU4OjI0LjI0ODI1KzAwOjAwIiwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJGRaeXJuYUQyS0lrbm5zZ2p4RnRkb082a2p5SHYzSXo1ZmNFMjZKM3huNC9yOVJ5S1prTkRXIiwiaWF0IjoxNjg1NDI2Mzc5fQ.sETJEdNnlF7RuucM3aszO7VE_SsSBkOuY8wfUVLp3qU'
+
     interface Data {
         card: ICard[]
         count: number,
@@ -179,7 +181,7 @@
                 axios
                     .get(`https://fazz-track-sample-api.vercel.app/video`, {
                         headers: {
-                            Authorization: token
+                            Authorization: tempToken
                         }
                     })
                     .then((res) => {
