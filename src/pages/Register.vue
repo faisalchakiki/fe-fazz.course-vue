@@ -3,10 +3,8 @@
         <div class="container flex justify-center ">
             <form @submit.prevent="handleRegister" action="" class="w-full border-[1px] p-4 sm:p-12 md:p-20 rounded-md my-12 max-w-2xl">
                 <div class="w-full flex flex-col items-center">
-                    <div>
-                        <LogoFazz/>
-                    </div>
-                    <p class="text-xl font-semibold mb-2">Daftar dan Mulai Belajar</p>
+                    <LogoFazz class="mb-3" />
+                    <p class="text-2xl font-semibold mb-2">Daftar dan Mulai Belajar</p>
                     <p class="text-normal mb-3">Sudah punya akun Fazzrack?
                         <span  @click="moveRegiter" class="text-[#ef6807] cursor-pointer">Masuk disini</span>
                     </p>
@@ -74,25 +72,27 @@
     import Input from '../components/atoms/Input.vue';
     import BtnPrimary from "../components/atoms/BtnPrimary.vue"
     import BtnGoogle from '../components/atoms/BtnGoogle.vue';
+    import Swal from 'sweetalert2'
     import LogoFazz from '../components/atoms/LogoFazz.vue';
     import axios from "axios"
 
     interface Data {
+        passwordConfirm : string
         form: IForm
     }
 
     interface IForm {
         email: string,
         password: String,
-  
     }
 
     export default defineComponent({
         data(): Data {
             return {
+                passwordConfirm: "",
                 form: {
                     email: "",
-                    password: ""
+                    password: "",
                 }
             }
         },
@@ -106,17 +106,31 @@
             handleInput(data : any) {
                 if (data.name === "email") {
                     this.form.email = data.value
-                } else {
+                } else if(data.name === "password") {
                     this.form.password = data.value
+                } else{
+                    this.passwordConfirm = data.value
                 }
-                console.log(this.form);
             },
             handleRegister(){
-               axios.post(`https://fazz-track-sample-api.vercel.app/register`, this.form)
-               .then((_res)=>{
-                this.$router.push('/login')
-               })
-            
+                if(this.form.email === '' || this.form.password === ''){
+                    return Swal.fire('Please fill all the input', '', 'warning')
+                }else if(this.passwordConfirm !== this.form.password){
+                    return Swal.fire('Password Not Match', '', 'warning')
+                }else{
+                    axios.post(`https://fazz-track-sample-api.vercel.app/register`, this.form)
+                    .then((_res)=>{
+                        Swal.fire('Register is Success,', 'dimohon untuk login ulang', 'success')
+                        setTimeout(() => {
+                            return this.$router.push('/login')
+                        }, 2000);
+                    }).catch((_err) => {
+                        Swal.fire('Internal Server Error', '', 'error')
+                        setTimeout(() => {
+                            return window.location.reload()
+                        }, 2000);
+                    })
+                }
             },
             moveRegiter(){
                 this.$router.push("/login")
