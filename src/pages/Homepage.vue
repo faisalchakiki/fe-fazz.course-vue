@@ -17,13 +17,9 @@
         <button @click="handleModal" class="border-2 rounded-md py-2 px-3 bg-primary-orange text-white tracking-wide border-primary-orange"><i class="fa-solid fa-circle-plus fa-2xl"></i></button>
       </div>
       <main class="container-class py-10 mx-auto grid grid-cols-3 gap-8 z-10 items-stretch">
-        <div v-if="isReadyData === false" class="h-[30vh] col-start-2">
-          <button v-if="isReadyData === false" type="button" class="bg-orange-500 text-white p-3 rounded-md w-full" disabled>
-          Processing...
-          </button>
-        </div>
-        <div v-if="isReadyData === true" v-for="item in dataMinicamps" :key="item.id">
-          <CardMinicamp :options="item" />
+        <SkeletonMinicamp v-if="isReadyData === false" />
+        <div v-for="item in dataMinicamps" :key="item.id">
+          <CardMinicamp v-if="isReadyData === true" :options="item" />
         </div>
     </main>
     </section>
@@ -42,6 +38,7 @@
   import Modal from '../components/molecules/AddMinicamp.vue'
   import NavbarSection from '../components/molecules/NavbarSection.vue';
   import CardMinicamp from '../components/molecules/CardMinicamp.vue';
+  import SkeletonMinicamp from '../components/atoms/SkeletonMinicamp.vue'
  
   const token = localStorage.getItem('token') 
   const tempToken = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImNyZWF0ZWRfYXQiOiIyMDIzLTA1LTI2VDA1OjU4OjI0LjI0ODI1KzAwOjAwIiwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJGRaeXJuYUQyS0lrbm5zZ2p4RnRkb082a2p5SHYzSXo1ZmNFMjZKM3huNC9yOVJ5S1prTkRXIiwiaWF0IjoxNjg1MTA0MzY2fQ.s8cgoCIfngy75U-VzF-SIP52u04qZ33b7myhpcwyUHI'
@@ -111,7 +108,8 @@
       NavbarSection,
       CardMinicamp,
       Modal,
-      ToastSuccess
+      ToastSuccess,
+      SkeletonMinicamp
     },
     methods:{
       async fetchData() {
