@@ -70,8 +70,7 @@
                     v-for="(item, index) in card"
                     :key="index"
                     class="w-full relative cursor-pointer">
-                    <div class="flex absolute top-1 z-[11] right-6">
-                        {{item.id}}
+                    <div v-if="isLogin" class="flex gap-1 absolute top-1 z-[11] right-2 md:right-3 xl:right-8">
                         <button
                             @click="showModal(item.id)"
                             class="bg-[#1cb314] w-8 h-8 rounded-full flex justify-center items-center">
@@ -87,7 +86,7 @@
                     <CardVidio :title="item.title" :cover="item.cover" :level="item.level"/>
                 </div>
             </div>
-            <div class='w-full flex justify-center'>
+            <div v-if="isLogin" class='w-full flex justify-center'>
                 <button
                     @click="moveToAddVidio"
                     class="btn btn-outline hover:bg-white hover:text-[#1d1e20]">Tambah Data</button>
@@ -113,7 +112,6 @@
     import axios from 'axios';
 
     const token = localStorage.getItem('token')
-
     const tempToken =  'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsImNyZWF0ZWRfYXQiOiIyMDIzLTA1LTI2VDA1OjU4OjI0LjI0ODI1KzAwOjAwIiwiZW1haWwiOiJhZG1pbkBtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJGRaeXJuYUQyS0lrbm5zZ2p4RnRkb082a2p5SHYzSXo1ZmNFMjZKM3huNC9yOVJ5S1prTkRXIiwiaWF0IjoxNjg1NDI2Mzc5fQ.sETJEdNnlF7RuucM3aszO7VE_SsSBkOuY8wfUVLp3qU'
 
     interface Data {
@@ -123,7 +121,8 @@
         modalDeleteStatus: boolean,
         modalStatus: boolean,
         id: number,
-        loadingStatus:boolean
+        loadingStatus:boolean,
+        isLogin:string |boolean
     }
     interface ICard {
         id: number;
@@ -145,7 +144,8 @@
                 modalDeleteStatus: false,
                 modalStatus: false,
                 id: 0,
-                loadingStatus:false
+                loadingStatus:false,
+                isLogin:token || false
             }
         },
         components: {
