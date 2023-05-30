@@ -41,8 +41,8 @@
                     <section>
                       <p class="text-[#b6bac0] font-medium mb-[16px] uppercase whitespace-nowrap">Online Course</p>
                       <section class="flex flex-col items-start gap-[6px]">
-                        <a href="/online-course" rel="noopener noreferrer" class="flex items-center font-bold whitespace-nowrap py-[4px]">Lihat Semua <svg data-v-cf1ec82f="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="icon ml-[8px]" width="16px" height="16px" viewBox="0 0 24 24"><path fill="currentColor" d="M4 11v2h12l-5.5 5.5l1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5L16 11H4Z"></path></svg>
-                        </a>
+                        <p @click="moveRoute('/online-course')" rel="noopener noreferrer" class="flex items-center font-bold whitespace-nowrap py-[4px]">Lihat Semua <svg data-v-cf1ec82f="" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="icon ml-[8px]" width="16px" height="16px" viewBox="0 0 24 24"><path fill="currentColor" d="M4 11v2h12l-5.5 5.5l1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5L16 11H4Z"></path></svg>
+                        </p>
                       </section>
                     </section>
                   </section>
@@ -123,11 +123,11 @@
               </section>
               <section v-else class="flex gap-5">
                   <button
-                      @click="moveLogin"
+                  @click="moveRoute('/login')"
                       type="button"
                       class="rounded-[4px] py-[12px] px-[20px] text-p bg-white text-blue-600 border-[1px] border-blue-500 hover:bg-blue-100 focus:shadow-[0_0_0_4px_rgba(73,115,182,0.1)] font-bold text-center outline-none disabled:bg-neutral-300 disabled:text-neutral-600 disabled:border-[1px] disabled:border-neutral-500">Masuk</button>
                   <button
-                  @click="moveRegister"
+                  @click="moveRoute('/register')"
                       type="button"
                       class="rounded-[4px] py-[12px] px-[20px] text-p bg-blue-600 text-neutral-100 border-[1px] border-blue-600 hover:bg-blue-700 hover:border-blue-700 focus:shadow-[0_0_0_4px_rgba(73,115,182,0.1)] font-bold text-center outline-none disabled:bg-neutral-300 disabled:text-neutral-600 disabled:border-[1px] disabled:border-neutral-500">Daftar</button>
               </section>
@@ -230,11 +230,8 @@
           window.location.reload()
           this.isLogin = false
         },
-        moveLogin(){
-          this.$router.push('/login')
-        },
-        moveRegister(){
-          this.$router.push('/register')
+        moveRoute(path : string){
+          this.$router.push(path)
         },
         async getDataUser(){
           const response = await axios.get('https://fazz-track-sample-api.vercel.app/profile',config)
